@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 
 const width = 8;
@@ -14,6 +15,30 @@ function App() {
 
   const [currentColorArrangement,setCurrentColorArrangement] = useState([]);
 
+
+  const checkForColumnOfFour = () => {
+    for (let i = 0; i <= 39; i++) {
+        const columnOfFour = [i, i + width, i + width * 2, i + width * 3]
+        const decidedColor = currentColorArrangement[i]
+
+        if (columnOfFour.every(square => currentColorArrangement[square] === decidedColor )) {
+            columnOfFour.forEach(square => currentColorArrangement[square] = '') 
+        }
+    }
+  }
+
+  const checkForColumnOfThree = () => {
+    for (let i = 0; i <= 47; i++) {
+        const columnOfThree = [i, i + width, i + width * 2]
+        const decidedColor = currentColorArrangement[i]
+
+        if (columnOfThree.every(square => currentColorArrangement[square] === decidedColor)) {
+            columnOfThree.forEach(square => currentColorArrangement[square] = '')
+        }
+    }
+  }
+
+
   const createBoard = () =>{
     const randomColorArrangement = [];
     for(let i=0;i<width*width;i++){
@@ -22,10 +47,20 @@ function App() {
     }
     setCurrentColorArrangement(randomColorArrangement);
   }
-  console.log(currentColorArrangement);
+
   useEffect(()=>{
     createBoard();
   },[])
+
+  useEffect(() => {
+    const timer = setInterval(()=>{
+      checkForColumnOfFour()
+      checkForColumnOfThree()
+      setCurrentColorArrangement([...currentColorArrangement])
+    },100)
+    return () => clearInterval(timer)
+  }, [ checkForColumnOfThree,checkForColumnOfFour,currentColorArrangement])
+
 
   return (
     <div className="app">
