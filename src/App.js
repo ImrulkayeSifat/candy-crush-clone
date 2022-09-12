@@ -1,5 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
+import ScoreBoard from './components/ScoreBoard'
+import blueCandy from './images/blue-candy.png'
+import greenCandy from './images/green-candy.png'
+import orangeCandy from './images/orange-candy.png'
+import purpleCandy from './images/purple-candy.png'
+import redCandy from './images/red-candy.png'
+import yellowCandy from './images/yellow-candy.png'
+import blank from './images/blank.png'
 
 const width = 8;
 const candyColors = [
@@ -24,7 +32,8 @@ function App() {
         const decidedColor = currentColorArrangement[i]
 
         if (columnOfFour.every(square => currentColorArrangement[square] === decidedColor )) {
-            columnOfFour.forEach(square => currentColorArrangement[square] = '')
+          setScoreDisplay((score) => score + 4);
+          columnOfFour.forEach(square => currentColorArrangement[square] = '')
             return true; 
         }
     }
@@ -39,7 +48,8 @@ function App() {
         if (notValid.includes(i)) continue
 
         if (rowOfFour.every(square => currentColorArrangement[square] === decidedColor )) {
-            rowOfFour.forEach(square => currentColorArrangement[square] = '')
+          setScoreDisplay((score) => score + 4)  
+          rowOfFour.forEach(square => currentColorArrangement[square] = '')
             return true;
         }
     }
@@ -51,7 +61,8 @@ function App() {
         const decidedColor = currentColorArrangement[i]
 
         if (columnOfThree.every(square => currentColorArrangement[square] === decidedColor)) {
-            columnOfThree.forEach(square => currentColorArrangement[square] = '')
+          setScoreDisplay((score) => score + 4)  
+          columnOfThree.forEach(square => currentColorArrangement[square] = '')
             return true;
         }
     }
@@ -66,7 +77,8 @@ function App() {
         if (notValid.includes(i)) continue
 
         if (rowOfThree.every(square => currentColorArrangement[square] === decidedColor )) {
-            rowOfThree.forEach(square => currentColorArrangement[square] = '')
+          setScoreDisplay((score) => score + 4)  
+          rowOfThree.forEach(square => currentColorArrangement[square] = '')
             return true;
         }
     }
@@ -175,6 +187,7 @@ function App() {
           />
         ))}
       </div>
+      <ScoreBoard score={scoreDisplay}/>
     </div>
   );
 }
