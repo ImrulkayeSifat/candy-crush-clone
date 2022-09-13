@@ -109,7 +109,7 @@ const App = () => {
         setSquareBeingDragged(e.target)
     }
     const dragDrop = (e) => {
-        
+        e.preventDefault();
         setSquareBeingReplaced(e.target)
     }
     const dragEnd = () => {
